@@ -14,11 +14,13 @@ import { moveFileToFolder } from './moveFileToFolder.js';
 import { handleCompressFile } from './handleCompressFile.js';
 
 export const parseEnterData = async (line) => {
-  const [point, ...data] = line.trim().split(/\s+/);
+  let [point, ...data] = line.trim().split(/\s+/);
 
   const isValid = validateLineData(point, data);
 
   if (isValid) {
+    data.length && (data = data.map((str) => str.replaceAll('*', ' ')));
+
     switch (point) {
       case 'up':
         process.chdir('..');
@@ -29,27 +31,27 @@ export const parseEnterData = async (line) => {
         break;
 
       case 'cd':
-        goToFolder(data[0]);
+        goToFolder(data);
         break;
 
       case 'os':
-        getOsData(data[0]);
+        getOsData(data);
         break;
 
       case 'cat':
-        readTargetFile(data[0]);
+        readTargetFile(data);
         break;
 
       case 'add':
-        await createNewFile(data[0]);
+        await createNewFile(data);
         break;
 
       case 'rm':
-        await removeTargetFile(data[0]);
+        await removeTargetFile(data);
         break;
 
       case 'hash':
-        await getHashFile(data[0]);
+        await getHashFile(data);
         break;
 
       case 'rn':
@@ -64,7 +66,11 @@ export const parseEnterData = async (line) => {
         await moveFileToFolder(data);
         break;
 
-      case ('compress', 'decompress'):
+      case 'compress':
+        await handleCompressFile(data, point);
+        break;
+
+      case 'decompress':
         await handleCompressFile(data, point);
         break;
 

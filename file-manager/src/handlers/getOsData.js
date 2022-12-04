@@ -1,7 +1,7 @@
 import { EOL, cpus, userInfo, arch } from 'os';
 import { wrong } from '../helpers/showMessage.js';
 
-export const getOsData = (arg) => {
+export const getOsData = ([arg]) => {
   switch (arg) {
     case '--EOL':
       console.log(`\x1b[35mDefault system End-Of-Line: ${JSON.stringify(EOL)}\x1b[35m`);

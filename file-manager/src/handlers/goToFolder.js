@@ -1,7 +1,7 @@
 import { resolve, parse } from 'path';
 import { error } from '../helpers/showMessage.js';
 
-export const goToFolder = (folder) => {
+export const goToFolder = ([folder]) => {
   try {
     const isRoot = folder.endsWith(':') && folder.length === 2;
     const targetPath = resolve(folder);
